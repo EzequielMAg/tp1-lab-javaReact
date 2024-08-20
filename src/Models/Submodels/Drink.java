@@ -4,10 +4,10 @@ import Models.Edible;
 
 import java.time.LocalDate;
 
-public class Drink extends Edible {
+public final class Drink extends Edible {
 
     //region ATTRIBUTES
-    private float alcogolContent;
+    private float alcoholContent;
     private boolean IsImported;
     //endregion
 
@@ -16,26 +16,35 @@ public class Drink extends Edible {
     public Drink() {
     }
 
-    public Drink(float alcogolContent, boolean isImported) {
-        this.alcogolContent = alcogolContent;
+    public Drink(float alcoholContent, boolean isImported) {
+        this.alcoholContent = alcoholContent;
         IsImported = isImported;
     }
 
-    public Drink(String id, String description, int quantity, double amount, float profitPercentage, boolean availableForSale, LocalDate expirationDate, float calories, float alcogolContent, boolean isImported) {
-        super(id, description, quantity, amount, profitPercentage, availableForSale, expirationDate, calories);
-        this.alcogolContent = alcogolContent;
+    public Drink(LocalDate expirationDate, float calories, float alcoholContent, boolean isImported) {
+        super(expirationDate, calories);
+        this.alcoholContent = alcoholContent;
+        IsImported = isImported;
+    }
+
+    public Drink(String id, String description, int availableStock, float salePrice, float cost,
+                 boolean availableForSale, LocalDate expirationDate, float calories, float alcoholContent,
+                 boolean isImported) {
+
+        super(id, description, availableStock, salePrice, cost, availableForSale, expirationDate, calories);
+        this.alcoholContent = alcoholContent;
         IsImported = isImported;
     }
 
     //endregion
 
     //region GETTERS AND SETTERS
-    public float getAlcogolContent() {
-        return alcogolContent;
+    public float getAlcoholContent() {
+        return alcoholContent;
     }
 
-    public void setAlcogolContent(float alcogolContent) {
-        this.alcogolContent = alcogolContent;
+    public void setAlcoholContent(float alcoholContent) {
+        this.alcoholContent = alcoholContent;
     }
 
     public boolean isImported() {

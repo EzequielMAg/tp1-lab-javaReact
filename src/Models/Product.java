@@ -5,22 +5,25 @@ public abstract class Product {
     //region ATTRIBUTES
     protected String id;
     protected String description;
-    protected int quantity;
-    protected double amount;
-    protected float profitPercentage;
+    protected int availableStock;
+    protected float salePrice;
+    //protected float profitPercentage;
+    protected float cost; // Con este atributo y el "salePrice" puedo calcular la ganancia y luego el % ganancia
     protected boolean availableForSale;
+
     //endregion
 
     //region CONSTRUCTORS
     public Product() {
     }
 
-    public Product(String id, String description, int quantity, double amount, float profitPercentage, boolean availableForSale) {
+    public Product(String id, String description, int availableStock, float salePrice, float cost,
+                   boolean availableForSale) {
         this.id = id;
         this.description = description;
-        this.quantity = quantity;
-        this.amount = amount;
-        this.profitPercentage = profitPercentage;
+        this.availableStock = availableStock;
+        this.salePrice = salePrice;
+        this.cost = cost;
         this.availableForSale = availableForSale;
     }
     //endregion
@@ -42,28 +45,28 @@ public abstract class Product {
         this.description = description;
     }
 
-    public int getQuantity() {
-        return quantity;
+    public int getAvailableStock() {
+        return availableStock;
     }
 
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
+    public void setAvailableStock(int availableStock) {
+        this.availableStock = availableStock;
     }
 
-    public double getAmount() {
-        return amount;
+    public float getSalePrice() {
+        return salePrice;
     }
 
-    public void setAmount(double amount) {
-        this.amount = amount;
+    public void setSalePrice(float salePrice) {
+        this.salePrice = salePrice;
     }
 
-    public float getProfitPercentage() {
-        return profitPercentage;
+    public float getCost() {
+        return cost;
     }
 
-    public void setProfitPercentage(float profitPercentage) {
-        this.profitPercentage = profitPercentage;
+    public void setCost(float cost) {
+        this.cost = cost;
     }
 
     public boolean isAvailableForSale() {
