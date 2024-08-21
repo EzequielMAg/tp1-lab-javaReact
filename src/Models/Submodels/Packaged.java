@@ -11,8 +11,9 @@ public final class Packaged extends Edible {
     //region ATTRIBUTES
     //public static StringBuilder lastId = new StringBuilder("AB000");
     public static String lastId = "AB000";
-    Packaging containerType;
-    boolean isImported;
+
+    private Packaging containerType;
+    private boolean isImported;
     //endregion
 
     //region CONSTRUCTORS
@@ -55,19 +56,26 @@ public final class Packaged extends Edible {
 
     //region GETTERS AND SETTERS
     public Packaging getContainerType() {
-        return containerType;
+        return this.containerType;
     }
 
     public void setContainerType(Packaging containerType) {
         this.containerType = containerType;
     }
 
-    public boolean isImported() {
-        return isImported;
+    public boolean getIsImported() {
+        return this.isImported;
     }
 
-    public void setImported(boolean imported) {
-        isImported = imported;
+    public void setIsImported(boolean isImported) {
+        this.isImported = isImported;
     }
     //endregion
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\n TIPO DE ENVASE.....: " + this.containerType.getName() +
+                "\n PROD. IMPORTADO....: " + (this.isImported ? "SI": "NO");
+    }
 }

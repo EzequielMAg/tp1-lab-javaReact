@@ -29,7 +29,7 @@ public abstract class Edible extends Product {
 
     //region GETTERS AND SETTERS
     public LocalDate getExpirationDate() {
-        return expirationDate;
+        return this.expirationDate;
     }
 
     public void setExpirationDate(LocalDate expirationDate) {
@@ -37,7 +37,7 @@ public abstract class Edible extends Product {
     }
 
     public float getCalories() {
-        return calories;
+        return this.calories;
     }
 
     public void setCalories(float calories) {
@@ -46,4 +46,10 @@ public abstract class Edible extends Product {
     //endregion
 
 
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\n FECHA DE VTO.......: " + this.expirationDate +
+                "\n CALORÍAS...........: " + this.description;
+    }
 }

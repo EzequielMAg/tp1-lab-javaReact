@@ -54,7 +54,7 @@ public final class Drink extends Edible {
 
     //region GETTERS AND SETTERS
     public float getAlcoholContent() {
-        return alcoholContent;
+        return this.alcoholContent;
     }
 
     public void setAlcoholContent(float alcoholContent) {
@@ -62,11 +62,18 @@ public final class Drink extends Edible {
     }
 
     public boolean isImported() {
-        return IsImported;
+        return this.IsImported;
     }
 
     public void setImported(boolean imported) {
         IsImported = imported;
     }
     //endregion
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\n ALCOHOL............: " + this.alcoholContent +
+                "\n PROD. IMPORTADO....: " + this.IsImported;
+    }
 }

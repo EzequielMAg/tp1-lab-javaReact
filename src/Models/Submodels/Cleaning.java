@@ -42,4 +42,10 @@ public final class Cleaning extends Product {
         this.cleaningSurface = cleaningSurface;
     }
     //endregion
+
+    @Override
+    public String toString() {
+        return super.toString() +
+                "\n PROD. PARA.........: " + this.cleaningSurface.getName();
+    }
 }

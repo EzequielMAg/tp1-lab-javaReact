@@ -13,7 +13,7 @@ public class Main {
         listProductsHarcodeada();
 
     }
-    
+
     public static void listProductsHarcodeada() {
         Product[] products = new Product[10];
 

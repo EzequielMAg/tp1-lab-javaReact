@@ -10,7 +10,6 @@
       <change beforePath="$PROJECT_DIR$/src/Models/Edible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Edible.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Drink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Drink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Packaged.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Packaged.java" afterDir="false" />
     </list>
@@ -79,7 +78,7 @@
       <workItem from="1723933803088" duration="52000" />
       <workItem from="1723933965500" duration="1345000" />
       <workItem from="1724087025927" duration="3615000" />
-      <workItem from="1724121949175" duration="30430000" />
+      <workItem from="1724121949175" duration="33817000" />
     </task>
     <servers />
   </component>

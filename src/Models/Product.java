@@ -104,14 +104,15 @@ public abstract class Product {
 
     @Override
     public String toString() {
-        return "\n ID del producto: " + id +
-                "\n Descripción:" + description +
-                "\n Stock: " + availableStock + " unidades" +
-                "\n Precio:" + salePrice +
-                "\n Costo: " + cost +
-                "\n Disponible p/ vta: " + availableForSale +
-                "\n Descuento: " + ((discount.getDiscountType()==DiscountType.NO_DISCOUNT) ? discount.getDiscountType():
-                                                                                                "calcular dcto en %");
+        return "\n ID DEL PRODUCTO....: " + this.id +
+                "\n DESCRIPCIÓN........: " + this.description +
+                "\n STOCK..............: " + this.availableStock + " unidades" +
+                "\n PRECIO.............: " + this.salePrice +
+                "\n COSTO..............: " + this.cost +
+                "\n DISPONIBLE P/ VTA..: " + this.availableForSale +
+                "\n DESCUENTO..........: " + ((this.discount.getDiscountType()==DiscountType.NO_DISCOUNT) ?
+                                                    this.discount.getDiscountType().getName():
+                                                    "calcular dcto en %"); //TODO: falta crear metodo para tal fin
     }
 
     public void viewProduct() {
@@ -123,7 +124,6 @@ public abstract class Product {
 
         System.out.println(this);
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
-
     }
 
 
