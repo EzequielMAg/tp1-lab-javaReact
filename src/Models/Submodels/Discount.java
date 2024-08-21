@@ -11,6 +11,11 @@ public final class Discount {
 
     //region CONSTRUCTORS
     public Discount() {
+        discountType = DiscountType.NO_DISCOUNT;
+    }
+
+    public Discount(DiscountType discountType) {
+        this.discountType = discountType;
     }
 
     public Discount(DiscountType discountType, float value) {

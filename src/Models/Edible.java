@@ -18,8 +18,10 @@ public abstract class Edible extends Product {
         this.calories = calories;
     }
 
-    public Edible(String id, String description, int availableStock, float salePrice, float cost, boolean availableForSale, LocalDate expirationDate, float calories) {
-        super(id, description, availableStock, salePrice, cost, availableForSale);
+    public Edible(String description, int availableStock, float salePrice, float cost, LocalDate expirationDate,
+                  float calories) {
+
+        super(description, availableStock, salePrice, cost);
         this.expirationDate = expirationDate;
         this.calories = calories;
     }

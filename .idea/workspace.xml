@@ -10,6 +10,7 @@
       <change beforePath="$PROJECT_DIR$/src/Models/Edible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Edible.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Drink.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Drink.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Packaged.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Packaged.java" afterDir="false" />
     </list>
@@ -53,6 +54,20 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="Main" />
+      <module name="tp1-lab-javaReact" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -64,7 +79,7 @@
       <workItem from="1723933803088" duration="52000" />
       <workItem from="1723933965500" duration="1345000" />
       <workItem from="1724087025927" duration="3615000" />
-      <workItem from="1724121949175" duration="13891000" />
+      <workItem from="1724121949175" duration="30430000" />
     </task>
     <servers />
   </component>

@@ -1,5 +1,9 @@
 package Models;
 
+import Enums.DiscountType;
+import Models.Submodels.Discount;
+import Tools.Console;
+
 public abstract class Product {
 
     //region ATTRIBUTES
@@ -10,21 +14,25 @@ public abstract class Product {
     //protected float profitPercentage;
     protected float cost; // Con este atributo y el "salePrice" puedo calcular la ganancia y luego el % ganancia
     protected boolean availableForSale;
-
+    protected Discount discount;
     //endregion
 
     //region CONSTRUCTORS
     public Product() {
+        availableForSale = true;
+        discount = new Discount(DiscountType.NO_DISCOUNT);
     }
 
-    public Product(String id, String description, int availableStock, float salePrice, float cost,
-                   boolean availableForSale) {
-        this.id = id;
+    public Product(String description, int availableStock, float salePrice, float cost) {
+        //this.id; VOLVERLO AUTOINCREMENTAL
+
         this.description = description;
         this.availableStock = availableStock;
         this.salePrice = salePrice;
         this.cost = cost;
-        this.availableForSale = availableForSale;
+
+        this.availableForSale = true;
+        discount = new Discount(DiscountType.NO_DISCOUNT);
     }
     //endregion
 
@@ -77,5 +85,46 @@ public abstract class Product {
         this.availableForSale = availableForSale;
     }
     //endregion
+
+    @Override
+    public boolean equals(Object obj) {
+        if(this == obj) return true;
+        if(obj == null || this.getClass() != obj.getClass()) return false;
+
+        Product product = (Product) obj;
+        return this.id.equals(product.id);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 17;
+        result = 31 * result + (id != null ? id.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "\n ID del producto: " + id +
+                "\n Descripción:" + description +
+                "\n Stock: " + availableStock + " unidades" +
+                "\n Precio:" + salePrice +
+                "\n Costo: " + cost +
+                "\n Disponible p/ vta: " + availableForSale +
+                "\n Descuento: " + ((discount.getDiscountType()==DiscountType.NO_DISCOUNT) ? discount.getDiscountType():
+                                                                                                "calcular dcto en %");
+    }
+
+    public void viewProduct() {
+        Console.cleanConsole();
+
+        System.out.println("\033[33m-------------------------------------------------------------------------");
+        System.out.println("                               PRODUCTO");
+        System.out.println("-------------------------------------------------------------------------\u001B[0m");
+
+        System.out.println(this);
+        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+
+    }
+
 
 }
