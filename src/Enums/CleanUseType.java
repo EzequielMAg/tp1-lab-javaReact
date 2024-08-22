@@ -1,6 +1,7 @@
 package Enums;
 
 public enum CleanUseType {
+    UNASSIGNED("SIN ASIGNAR"),
     KITCHEN("COCINA"),
     BATHROOM("BAÑO"),
     CLOTHES("ROPA"),

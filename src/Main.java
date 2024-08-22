@@ -10,7 +10,9 @@ import java.time.LocalDate;
 public class Main {
     public static void main(String[] args) {
 
-        listProductsHarcodeada();
+        //listProductsHarcodeada();
+        pruebaProductosVacios();
+
 
     }
 
@@ -40,6 +42,18 @@ public class Main {
             System.out.println(product);
         }
     }
+
+    public static void pruebaProductosVacios() {
+        Cleaning prodLimpieza = new Cleaning();
+        System.out.println(prodLimpieza);
+
+        Drink prodBebida  = new Drink();
+        System.out.println(prodBebida);
+
+        Packaged prodEnvasado = new Packaged();
+        System.out.println(prodEnvasado);
+    }
+
 }
 
 //region ATTRIBUTES

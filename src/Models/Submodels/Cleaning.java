@@ -6,31 +6,26 @@ import Tools.Tools;
 
 public final class Cleaning extends Product {
 
-    public static String lastId = "AZ000";
+    public static StringBuilder lastId = new StringBuilder("AZ000");
     private CleanUseType cleaningSurface;
 
     //region CONSTRUCTORS
     public Cleaning() {
-        super.id = Tools.generateNextId(lastId); // Asigna el ID actual y luego incrementa el contador
-        lastId = id;
+        Tools.autoIncrementId(lastId, super.id);
+        this.cleaningSurface = CleanUseType.UNASSIGNED; // Asigno uno por default para que no apunte a null
     }
 
     public Cleaning(CleanUseType cleaningSurface) {
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
+        Tools.autoIncrementId(lastId, super.id);
 
         this.cleaningSurface = cleaningSurface;
     }
 
-    public Cleaning(String description, int availableStock, float salePrice, float cost, CleanUseType cleaningSurface) {
-
-        super(description, availableStock, salePrice, cost);
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
-
+    public Cleaning(String description, int availableStock, float salePrice, float profitPercentage, CleanUseType cleaningSurface) {
+        super(description, availableStock, salePrice, profitPercentage);
+        Tools.autoIncrementId(lastId, super.id);
         this.cleaningSurface = cleaningSurface;
     }
-
     //endregion
 
     //region GETTERS AND SETTERS
@@ -48,4 +43,6 @@ public final class Cleaning extends Product {
         return super.toString() +
                 "\n PROD. PARA.........: " + this.cleaningSurface.getName();
     }
+
+
 }

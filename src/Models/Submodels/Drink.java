@@ -8,48 +8,39 @@ import java.time.LocalDate;
 public final class Drink extends Edible {
 
     //region ATTRIBUTES
-    public static String lastId = "AC000";
+    public static StringBuilder lastId = new StringBuilder("AC000");
     private float alcoholContent;
-    private boolean IsImported;
+    private boolean isImported;
     //endregion
 
     //region CONSTRUCTORS
 
     public Drink() {
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
     public Drink(float alcoholContent, boolean isImported) {
+        Tools.autoIncrementId(lastId, super.id);
         this.alcoholContent = alcoholContent;
-
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
-
-        IsImported = isImported;
+        this.isImported = isImported;
     }
 
     public Drink(LocalDate expirationDate, float calories, float alcoholContent, boolean isImported) {
-
         super(expirationDate, calories);
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
 
+        Tools.autoIncrementId(lastId, super.id);
         this.alcoholContent = alcoholContent;
-        IsImported = isImported;
+        this.isImported = isImported;
     }
 
-    public Drink(String description, int availableStock, float salePrice, float cost, LocalDate expirationDate,
+    public Drink(String description, int availableStock, float salePrice, float profitPercentage, LocalDate expirationDate,
                  float calories, float alcoholContent, boolean isImported) {
 
-        super(description, availableStock, salePrice, cost, expirationDate, calories);
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
-
+        super(description, availableStock, salePrice, profitPercentage, expirationDate, calories);
+        Tools.autoIncrementId(lastId, super.id);
         this.alcoholContent = alcoholContent;
-        IsImported = isImported;
+        this.isImported = isImported;
     }
-
     //endregion
 
     //region GETTERS AND SETTERS
@@ -62,18 +53,18 @@ public final class Drink extends Edible {
     }
 
     public boolean isImported() {
-        return this.IsImported;
+        return this.isImported;
     }
 
     public void setImported(boolean imported) {
-        IsImported = imported;
+        isImported = imported;
     }
     //endregion
 
     @Override
     public String toString() {
         return super.toString() +
-                "\n ALCOHOL............: " + this.alcoholContent +
-                "\n PROD. IMPORTADO....: " + this.IsImported;
+                "\n ALCOHOL............: " + this.alcoholContent + "%" +
+                "\n PROD. IMPORTADO....: " + (this.isImported ? "SI" : "NO");
     }
 }

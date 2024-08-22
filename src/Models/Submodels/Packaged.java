@@ -1,5 +1,6 @@
 package Models.Submodels;
 
+import Enums.CleanUseType;
 import Enums.Packaging;
 import Models.Edible;
 import Tools.Tools;
@@ -9,34 +10,27 @@ import java.time.LocalDate;
 public final class Packaged extends Edible {
 
     //region ATTRIBUTES
-    //public static StringBuilder lastId = new StringBuilder("AB000");
-    public static String lastId = "AB000";
-
+    public static StringBuilder lastId = new StringBuilder("AB000");
     private Packaging containerType;
     private boolean isImported;
     //endregion
 
     //region CONSTRUCTORS
     public Packaged() {
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
+        Tools.autoIncrementId(lastId, super.id);
+        this.containerType = Packaging.UNASSIGNED; // Asigno uno por default para que no apunte a null
     }
 
     public Packaged(Packaging containerType, boolean isImported) {
-
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
-
+        Tools.autoIncrementId(lastId, super.id);
         this.containerType = containerType;
         this.isImported = isImported;
     }
 
     public Packaged(LocalDate expirationDate, float calories, Packaging containerType, boolean isImported) {
-
         super(expirationDate, calories);
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
 
+        Tools.autoIncrementId(lastId, super.id);
         this.containerType = containerType;
         this.isImported = isImported;
     }
@@ -45,9 +39,7 @@ public final class Packaged extends Edible {
                     float calories, Packaging containerType, boolean isImported) {
 
         super(description, availableStock, salePrice, cost, expirationDate, calories);
-        super.id = Tools.generateNextId(lastId);
-        lastId = id;
-
+        Tools.autoIncrementId(lastId, super.id);
         this.containerType = containerType;
         this.isImported = isImported;
     }

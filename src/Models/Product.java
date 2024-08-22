@@ -3,16 +3,18 @@ package Models;
 import Enums.DiscountType;
 import Models.Submodels.Discount;
 import Tools.Console;
+import Tools.Tools;
 
 public abstract class Product {
 
     //region ATTRIBUTES
-    protected String id;
+    //Es autoincremental. Lo implemente en los submodels, ya q c/ clase tiene un ID de letras !=
+    protected StringBuilder id = new StringBuilder();
     protected String description;
     protected int availableStock;
     protected float salePrice;
-    //protected float profitPercentage;
-    protected float cost; // Con este atributo y el "salePrice" puedo calcular la ganancia y luego el % ganancia
+    protected float profitPercentage;
+    //protected float cost;
     protected boolean availableForSale;
     protected Discount discount;
     //endregion
@@ -20,28 +22,37 @@ public abstract class Product {
     //region CONSTRUCTORS
     public Product() {
         availableForSale = true;
-        discount = new Discount(DiscountType.NO_DISCOUNT);
+        discount = new Discount(); //Instancio un objeto Discount por default para que no apunte a null
     }
 
-    public Product(String description, int availableStock, float salePrice, float cost) {
-        //this.id; VOLVERLO AUTOINCREMENTAL
+    public Product(String description, int availableStock, float salePrice, float profitPercentage) {
 
         this.description = description;
         this.availableStock = availableStock;
         this.salePrice = salePrice;
-        this.cost = cost;
+        this.profitPercentage = profitPercentage;
 
         this.availableForSale = true;
-        discount = new Discount(DiscountType.NO_DISCOUNT);
+        discount = new Discount();
+    }
+
+    public Product(String description, int availableStock, float salePrice, float profitPercentage, Discount discount) {
+        this.description = description;
+        this.availableStock = availableStock;
+        this.salePrice = salePrice;
+        this.profitPercentage = profitPercentage;
+        this.discount = discount;
+
+        this.availableForSale = true;
     }
     //endregion
 
     //region GETTERS AND SETTERS
-    public String getId() {
+    public StringBuilder getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(StringBuilder id) {
         this.id = id;
     }
 
@@ -69,12 +80,12 @@ public abstract class Product {
         this.salePrice = salePrice;
     }
 
-    public float getCost() {
-        return cost;
+    public float getProfitPercentage() {
+        return this.profitPercentage;
     }
 
-    public void setCost(float cost) {
-        this.cost = cost;
+    public void setProfitPercentage(float profitPercentage) {
+        this.profitPercentage = profitPercentage;
     }
 
     public boolean isAvailableForSale() {
@@ -92,7 +103,7 @@ public abstract class Product {
         if(obj == null || this.getClass() != obj.getClass()) return false;
 
         Product product = (Product) obj;
-        return this.id.equals(product.id);
+        return this.id.toString().equals(product.id.toString());
     }
 
     @Override
@@ -105,14 +116,18 @@ public abstract class Product {
     @Override
     public String toString() {
         return "\n ID DEL PRODUCTO....: " + this.id +
-                "\n DESCRIPCIÓN........: " + this.description +
+                "\n DESCRIPCIÓN........: " + (this.description == null ? "SIN DESCRIPCIÓN" : this.description) +
                 "\n STOCK..............: " + this.availableStock + " unidades" +
-                "\n PRECIO.............: " + this.salePrice +
-                "\n COSTO..............: " + this.cost +
-                "\n DISPONIBLE P/ VTA..: " + this.availableForSale +
+                "\n PRECIO.............: $" + this.salePrice +
+                //"\n COSTO..............: " + this.cost +
+                "\n GANANCIA...........: " + this.profitPercentage + "%" +
+                "\n DISPONIBLE P/ VTA..: " + (this.availableForSale ? "SI" : "NO") +
                 "\n DESCUENTO..........: " + ((this.discount.getDiscountType()==DiscountType.NO_DISCOUNT) ?
-                                                    this.discount.getDiscountType().getName():
-                                                    "calcular dcto en %"); //TODO: falta crear metodo para tal fin
+                                                this.discount.getDiscountType().getName() :
+
+                                                    (this.discount.getDiscountType()==DiscountType.PERCENTAGE ?
+                                                        this.discount.getValue() + "%":
+                                                        this.calculateDiscountPercentage(this.salePrice, this.discount.getValue())));
     }
 
     public void viewProduct() {
@@ -126,5 +141,9 @@ public abstract class Product {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
     }
 
+    public float calculateDiscountPercentage(float originalValue, float targetValue) {
+        float difference = originalValue - targetValue;
+        return Tools.percentageOfPartialValue(originalValue, difference);
+    }
 
 }
