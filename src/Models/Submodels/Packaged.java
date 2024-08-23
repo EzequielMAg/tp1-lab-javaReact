@@ -12,7 +12,6 @@ public final class Packaged extends Edible {
     //region ATTRIBUTES
     public static StringBuilder lastId = new StringBuilder("AB000");
     private Packaging containerType;
-    private boolean isImported;
     //endregion
 
     //region CONSTRUCTORS
@@ -21,27 +20,40 @@ public final class Packaged extends Edible {
         this.containerType = Packaging.UNASSIGNED; // Asigno uno por default para que no apunte a null
     }
 
-    public Packaged(Packaging containerType, boolean isImported) {
-        Tools.autoIncrementId(lastId, super.id);
+    public Packaged(Packaging containerType) {
         this.containerType = containerType;
-        this.isImported = isImported;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
-    public Packaged(LocalDate expirationDate, float calories, Packaging containerType, boolean isImported) {
-        super(expirationDate, calories);
+    public Packaged(String description, float salePrice, LocalDate expirationDate, float calories,
+                    boolean isImported, Packaging containerType) {
 
-        Tools.autoIncrementId(lastId, super.id);
+        super(description, salePrice, expirationDate, calories, isImported);
         this.containerType = containerType;
-        this.isImported = isImported;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Packaged(String description, float salePrice, Discount discount, LocalDate expirationDate, float calories,
+                    boolean isImported, Packaging containerType) {
+
+        super(description, salePrice, discount, expirationDate, calories, isImported);
+        this.containerType = containerType;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Packaged(LocalDate expirationDate, float calories, boolean isImported, Packaging containerType) {
+
+        super(expirationDate, calories, isImported);
+        this.containerType = containerType;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
     public Packaged(String description, int availableStock, float salePrice, float cost, LocalDate expirationDate,
-                    float calories, Packaging containerType, boolean isImported) {
+                    float calories, Packaging containerType) {
 
         super(description, availableStock, salePrice, cost, expirationDate, calories);
-        Tools.autoIncrementId(lastId, super.id);
         this.containerType = containerType;
-        this.isImported = isImported;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
     //endregion
@@ -55,19 +67,11 @@ public final class Packaged extends Edible {
         this.containerType = containerType;
     }
 
-    public boolean getIsImported() {
-        return this.isImported;
-    }
-
-    public void setIsImported(boolean isImported) {
-        this.isImported = isImported;
-    }
     //endregion
 
     @Override
     public String toString() {
         return super.toString() +
-                "\n TIPO DE ENVASE.....: " + this.containerType.getName() +
-                "\n PROD. IMPORTADO....: " + (this.isImported ? "SI": "NO");
+                "\n TIPO DE ENVASE.....: " + this.containerType.getName();
     }
 }

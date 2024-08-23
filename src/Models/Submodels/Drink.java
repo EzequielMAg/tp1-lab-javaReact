@@ -10,36 +10,27 @@ public final class Drink extends Edible {
     //region ATTRIBUTES
     public static StringBuilder lastId = new StringBuilder("AC000");
     private float alcoholContent;
-    private boolean isImported;
     //endregion
 
     //region CONSTRUCTORS
-
     public Drink() {
         Tools.autoIncrementId(lastId, super.id);
     }
 
-    public Drink(float alcoholContent, boolean isImported) {
-        Tools.autoIncrementId(lastId, super.id);
+    public Drink(String description, float salePrice, LocalDate expirationDate, float calories,
+                 boolean isImported, float alcoholContent) {
+
+        super(description, salePrice, expirationDate, calories, isImported);
         this.alcoholContent = alcoholContent;
-        this.isImported = isImported;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
-    public Drink(LocalDate expirationDate, float calories, float alcoholContent, boolean isImported) {
-        super(expirationDate, calories);
+    public Drink(String description, float salePrice, Discount discount, LocalDate expirationDate, float calories,
+                 boolean isImported, float alcoholContent) {
 
-        Tools.autoIncrementId(lastId, super.id);
+        super(description, salePrice, discount, expirationDate, calories, isImported);
         this.alcoholContent = alcoholContent;
-        this.isImported = isImported;
-    }
-
-    public Drink(String description, int availableStock, float salePrice, float profitPercentage, LocalDate expirationDate,
-                 float calories, float alcoholContent, boolean isImported) {
-
-        super(description, availableStock, salePrice, profitPercentage, expirationDate, calories);
         Tools.autoIncrementId(lastId, super.id);
-        this.alcoholContent = alcoholContent;
-        this.isImported = isImported;
     }
     //endregion
 
@@ -51,20 +42,11 @@ public final class Drink extends Edible {
     public void setAlcoholContent(float alcoholContent) {
         this.alcoholContent = alcoholContent;
     }
-
-    public boolean isImported() {
-        return this.isImported;
-    }
-
-    public void setImported(boolean imported) {
-        isImported = imported;
-    }
     //endregion
 
     @Override
     public String toString() {
         return super.toString() +
-                "\n ALCOHOL............: " + this.alcoholContent + "%" +
-                "\n PROD. IMPORTADO....: " + (this.isImported ? "SI" : "NO");
+                "\n ALCOHOL............: " + this.alcoholContent + "%";
     }
 }

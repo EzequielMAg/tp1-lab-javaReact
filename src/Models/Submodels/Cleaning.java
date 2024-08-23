@@ -16,15 +16,27 @@ public final class Cleaning extends Product {
     }
 
     public Cleaning(CleanUseType cleaningSurface) {
-        Tools.autoIncrementId(lastId, super.id);
-
         this.cleaningSurface = cleaningSurface;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Cleaning(String description, float salePrice, CleanUseType cleaningSurface) {
+        super(description, salePrice);
+        this.cleaningSurface = cleaningSurface;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Cleaning(String description, float salePrice, Discount discount, CleanUseType cleaningSurface) {
+        super(description, salePrice, discount);
+        this.cleaningSurface = cleaningSurface;
+        Tools.autoIncrementId(lastId, super.id);
     }
 
     public Cleaning(String description, int availableStock, float salePrice, float profitPercentage, CleanUseType cleaningSurface) {
+
         super(description, availableStock, salePrice, profitPercentage);
-        Tools.autoIncrementId(lastId, super.id);
         this.cleaningSurface = cleaningSurface;
+        Tools.autoIncrementId(lastId, super.id);
     }
     //endregion
 

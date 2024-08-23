@@ -25,6 +25,22 @@ public abstract class Product {
         discount = new Discount(); //Instancio un objeto Discount por default para que no apunte a null
     }
 
+    public Product(String description, float salePrice) {
+        this.description = description;
+        this.salePrice = salePrice;
+
+        availableForSale = true;
+        this.discount = new Discount();
+    }
+
+    public Product(String description, float salePrice, Discount discount) {
+        this.description = description;
+        this.salePrice = salePrice;
+        this.discount = discount;
+
+        availableForSale = true;
+    }
+
     public Product(String description, int availableStock, float salePrice, float profitPercentage) {
 
         this.description = description;
@@ -117,20 +133,18 @@ public abstract class Product {
     public String toString() {
         return "\n ID DEL PRODUCTO....: " + this.id +
                 "\n DESCRIPCIÓN........: " + (this.description == null ? "SIN DESCRIPCIÓN" : this.description) +
-                "\n STOCK..............: " + this.availableStock + " unidades" +
-                "\n PRECIO.............: $" + this.salePrice +
-                //"\n COSTO..............: " + this.cost +
-                "\n GANANCIA...........: " + this.profitPercentage + "%" +
+                "\n STOCK..............: " + this.availableStock + (this.availableStock > 1 ? " unidad" : " unidades") +
+                "\n PRECIO.............: " + this.showSalePrice() +
+                //"\n COSTO..............: " + this.cost + //lo habia planteado antes y lo elimine
+                "\n GANANCIA...........: " + this.showProfit() +
                 "\n DISPONIBLE P/ VTA..: " + (this.availableForSale ? "SI" : "NO") +
-                "\n DESCUENTO..........: " + ((this.discount.getDiscountType()==DiscountType.NO_DISCOUNT) ?
-                                                this.discount.getDiscountType().getName() :
 
-                                                    (this.discount.getDiscountType()==DiscountType.PERCENTAGE ?
-                                                        this.discount.getValue() + "%":
-                                                        this.calculateDiscountPercentage(this.salePrice, this.discount.getValue())));
+                (this.discount.getDiscountType() == DiscountType.NO_DISCOUNT ?
+                    "" :
+                    "\n DESCUENTO..........: " + this.showDiscount());
     }
 
-    public void viewProduct() {
+    public void showProduct() {
         Console.cleanConsole();
 
         System.out.println("\033[33m-------------------------------------------------------------------------");
@@ -141,9 +155,82 @@ public abstract class Product {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
     }
 
+    public void showProductFromSupplier() {
+        // Hago este metodo porque el proveedor no va a querer mostrar todos los datos, algunos son privados.
+
+        System.out.println(
+                "\n ID DEL PRODUCTO....: " + this.id +
+                "\n DESCRIPCIÓN........: " + (this.description == null ? "SIN DESCRIPCIÓN" : this.description) +
+                // STOCK: planteé un stock ILIMITADO, por eso ni lo muestro
+                //TODO: despues quiero plantear un stock LIMITADO, y que sea controlado cuando compro productos al proveedor.
+
+                // GANANCIA: este atributo me parece privado, osea que no hace falta que lo sepa la tienda
+
+                "\n PRECIO.............: " + this.showSalePrice() +
+
+                // DISPONIBLE P/ VTA.: tampoco lo muestro porque yo planteo que todos los productos que tiene el prov.
+                // estan disponibles
+                        (this.discount.getDiscountType() == DiscountType.NO_DISCOUNT ?
+                                "" :
+                                "\n DESCUENTO..........: " + this.showDiscount()));
+    }
+
+    public String showSalePrice() {
+        //Si NO TIENE DESCUENTO muestro el precio directamente
+        if(this.discount.getDiscountType() == DiscountType.NO_DISCOUNT) {
+            return "$" + this.salePrice;
+        }
+
+        //Si llego aca, es porque TIENE UN DESCUENTO -> tengo que hacer el calculo del precio final
+        return "$" + this.finalPriceWithDiscount() + " (con descuento).    $" + this.salePrice + " (anterior)";
+    }
+
+    public String showDiscount() {
+        DiscountType discountType = this.discount.getDiscountType();
+
+        if(discountType == DiscountType.NO_DISCOUNT) {
+            return discountType.getName();
+        }
+
+        if (discountType == DiscountType.PERCENTAGE) {
+            return this.discount.getValue() + "%";
+        }
+
+        return this.calculateDiscountPercentage(this.salePrice, this.discount.getValue()) + "%";
+    }
+
+    public String showProfit() {
+
+        // Si el producto NO TIENE DESCUENTO la ganancia no se modifica, sigue siendo la misma
+        if(this.discount.getDiscountType() == DiscountType.NO_DISCOUNT) {
+            return this.profitPercentage + "%";
+        }
+
+        //TODO:
+        // En este punto, el producto TIENE UN DESCUENTO -> debo calcular la GANANCIA REAL
+        // Tengo que plantear un atributo COST, aunque puedo calcularlo sin el costo... DEBO TENER CARGADA LA GANANCIA
+        // Y si no la tengo cargada aun?
+        // 1° SE DEBE RESOLVER LA COMPRA..... Tiene que estar el atributo COST, y apenas se compra un producto para la
+        // tienda se debe asignar "salePrice" al "cost". Luego si E dcto llamar al metodo "finalProfitAfterDiscount()"
+        //float newProfit =
+
+        return "";
+    }
+
     public float calculateDiscountPercentage(float originalValue, float targetValue) {
         float difference = originalValue - targetValue;
         return Tools.percentageOfPartialValue(originalValue, difference);
     }
 
+    public float finalPriceWithDiscount() {
+        float remainingPercentage = 100 - this.discount.getValue();
+        return (remainingPercentage * this.salePrice) / 100;
+    }
+
+    public float finalProfitAfterDiscount() {
+
+
+
+        return 0.0f;
+    }
 }

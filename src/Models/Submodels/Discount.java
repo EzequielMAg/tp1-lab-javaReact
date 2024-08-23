@@ -14,6 +14,13 @@ public final class Discount {
         discountType = DiscountType.NO_DISCOUNT;
     }
 
+    // Con este constructor plantéo que si creo un objeto Discount pasandole un valor float por parametro,
+    // tal valor representa el descuento a aplicar.
+    public Discount(float value) {
+        this.value = value;
+        this.discountType = DiscountType.PERCENTAGE;
+    }
+
     public Discount(DiscountType discountType, float value) {
         this.discountType = discountType;
         this.value = value;
@@ -38,4 +45,9 @@ public final class Discount {
     }
     //endregion
 
+    @Override
+    public String toString() {
+        return "\n TIPO DE DESCUENTO....: " + this.discountType.getName() +
+                "\n VALOR........: " + this.value;
+    }
 }
