@@ -7,9 +7,8 @@
     <list default="true" id="16f49a74-9506-400f-a16b-5bcbe20ce9f4" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enums/CleanUseType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enums/CleanUseType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Enums/Packaging.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Enums/Packaging.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Models/Edible.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Edible.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Product.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Product.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Cleaning.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Models/Submodels/Discount.java" afterDir="false" />
@@ -44,19 +43,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/lab-javaReact&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "E:/cloned-repositories/TP-MercadoLibre",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
@@ -83,7 +83,8 @@
       <workItem from="1723933965500" duration="1345000" />
       <workItem from="1724087025927" duration="3615000" />
       <workItem from="1724121949175" duration="39297000" />
-      <workItem from="1724292540204" duration="10727000" />
+      <workItem from="1724292540204" duration="22830000" />
+      <workItem from="1724351925933" duration="14641000" />
     </task>
     <servers />
   </component>
