@@ -48,10 +48,20 @@ public final class Packaged extends Edible {
         Tools.autoIncrementId(lastId, super.id);
     }
 
-    public Packaged(String description, int availableStock, float salePrice, float cost, LocalDate expirationDate,
-                    float calories, Packaging containerType) {
+    public Packaged(String description, int availableStock, float salePrice, float profitPercentage,
+                    LocalDate expirationDate, float calories, boolean isImported,
+                    Packaging containerType) {
 
-        super(description, availableStock, salePrice, cost, expirationDate, calories);
+        super(description, availableStock, salePrice, profitPercentage, expirationDate, calories, isImported);
+        this.containerType = containerType;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Packaged(String description, int availableStock, float salePrice, float profitPercentage, Discount discount,
+                    LocalDate expirationDate, float calories, boolean isImported,
+                    Packaging containerType) {
+
+        super(description, availableStock, salePrice, profitPercentage, discount, expirationDate, calories, isImported);
         this.containerType = containerType;
         Tools.autoIncrementId(lastId, super.id);
     }

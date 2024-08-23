@@ -133,7 +133,7 @@ public abstract class Product {
     public String toString() {
         return "\n ID DEL PRODUCTO....: " + this.id +
                 "\n DESCRIPCIÓN........: " + (this.description == null ? "SIN DESCRIPCIÓN" : this.description) +
-                "\n STOCK..............: " + this.availableStock + (this.availableStock > 1 ? " unidad" : " unidades") +
+                "\n STOCK..............: " + this.availableStock + (this.availableStock == 1 ? " unidad" : " unidades") +
                 "\n PRECIO.............: " + this.showSalePrice() +
                 //"\n COSTO..............: " + this.cost + //lo habia planteado antes y lo elimine
                 "\n GANANCIA...........: " + this.showProfit() +
@@ -155,7 +155,7 @@ public abstract class Product {
         System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
     }
 
-    public void showProductFromSupplier() {
+    public void showProductInReducedFormat()         {
         // Hago este metodo porque el proveedor no va a querer mostrar todos los datos, algunos son privados.
 
         System.out.println(

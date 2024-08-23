@@ -1,6 +1,7 @@
 package Models;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 public final class Store {
@@ -14,6 +15,13 @@ public final class Store {
 
     //region CONSTRUCTORS
     public Store() {
+    }
+
+    public Store(String name, int maxProductsStock, BigDecimal cashBalance) {
+        this.name = name;
+        this.maxProductsStock = maxProductsStock;
+        this.cashBalance = cashBalance;
+        this.productsList = new ArrayList<>();
     }
 
     public Store(String name, int maxProductsStock, BigDecimal cashBalance, List<Product> productsList) {
@@ -57,8 +65,47 @@ public final class Store {
     public void setProductsList(List<Product> productsList) {
         this.productsList = productsList;
     }
-
     //endregion
 
+    @Override
+    public String toString() {
+        return "\n NOMBRE DE LA TIENDA: " + this.name +
+                "\n MAX. PROD. STOCK...: " + this.maxProductsStock +
+                "\n DINERO EN CAJA.....: $" + this.cashBalance +
+                "\n\n PRODUCTOS DISTINTOS: " + this.quantityDifferentProducts() +
+                "\n TOTAL PROD. STOCK..: " + this.totalQuantityProductsStock();
+    }
 
+    //METODO QUE RETORNE LA CANTIDAD DE PRODUCTOS DISTINTOS QUE TIENE LA TIENDA
+    public int quantityDifferentProducts() {
+        if(this.productsList == null)
+            return 0;
+
+        return this.productsList.size();
+    }
+
+    //METODO QUE RETORNE LA CANTIDAD TOTAL DE UNIDADES DE PRODUCTOS QUE TIENE LA TIENDA
+    public int totalQuantityProductsStock() {
+
+        if(this.productsList == null) return 0;
+
+        int counter = 0;
+
+        for(Product product : this.productsList) {
+            counter += product.availableStock;
+        }
+
+        return counter;
+    }
+
+    //METODO PARA COMPRAR PRODUCTOS
+    public void buyProduct(Product product) {
+
+        //AGREGAR PROD A LA LISTA DE LA TIENDA
+        //TODO: AGREGAR ATRIBUTO "COST" AL PRODUCT
+        ////TODO: asignar el valor del salePrice del producto pasado por parametro al atributo "cost"
+        //preguntar al usuario que ganancia quiere agregarle al producto
+        //pedir que confirme o salir de la compra
+        //
+    }
 }

@@ -8,9 +8,9 @@ import java.time.LocalDate;
 public abstract class Edible extends Product {
 
     //region ATTRIBUTES
-    private LocalDate expirationDate;
-    private float calories;
-    private boolean isImported;
+    protected LocalDate expirationDate;
+    protected float calories;
+    protected boolean isImported;
 
     //endregion
 
@@ -42,13 +42,23 @@ public abstract class Edible extends Product {
         this.isImported = isImported;
     }
 
-    public Edible(String description, int availableStock, float salePrice, float profitPercentage, LocalDate expirationDate,
-                  float calories) {
+    public Edible(String description, int availableStock, float salePrice, float profitPercentage,
+                  LocalDate expirationDate, float calories, boolean isImported) {
 
         super(description, availableStock, salePrice, profitPercentage);
         this.expirationDate = expirationDate;
         this.calories = calories;
+        this.isImported = isImported;
     }
+
+    public Edible(String description, int availableStock, float salePrice, float profitPercentage, Discount discount,
+                  LocalDate expirationDate, float calories, boolean isImported) {
+        super(description, availableStock, salePrice, profitPercentage, discount);
+        this.expirationDate = expirationDate;
+        this.calories = calories;
+        this.isImported = isImported;
+    }
+
     //endregion
 
     //region GETTERS AND SETTERS

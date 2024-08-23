@@ -32,6 +32,25 @@ public final class Drink extends Edible {
         this.alcoholContent = alcoholContent;
         Tools.autoIncrementId(lastId, super.id);
     }
+
+    public Drink(String description, int availableStock, float salePrice, float profitPercentage,
+                 LocalDate expirationDate, float calories, boolean isImported,
+                 float alcoholContent) {
+
+        super(description, availableStock, salePrice, profitPercentage, expirationDate, calories, isImported);
+        this.alcoholContent = alcoholContent;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
+    public Drink(String description, int availableStock, float salePrice, float profitPercentage, Discount discount,
+                 LocalDate expirationDate, float calories, boolean isImported,
+                 float alcoholContent) {
+
+        super(description, availableStock, salePrice, profitPercentage, discount, expirationDate, calories, isImported);
+        this.alcoholContent = alcoholContent;
+        Tools.autoIncrementId(lastId, super.id);
+    }
+
     //endregion
 
     //region GETTERS AND SETTERS
