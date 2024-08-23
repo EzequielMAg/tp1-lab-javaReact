@@ -1,5 +1,8 @@
 package Tools;
 
+import java.time.LocalDate;
+import java.util.concurrent.ThreadLocalRandom;
+
 public final class Tools {
     public static String generateNextId(String lastId) {
 
@@ -32,5 +35,27 @@ public final class Tools {
 
     public static float percentageOfPartialValue(float totalValue, float partialValue) {
         return (partialValue * 100) / totalValue;
+    }
+
+    public static LocalDate generateRandomFutureDate() {
+        // Obtener la fecha actual
+        LocalDate today = LocalDate.now();
+
+        // Generar un número aleatorio de días entre 31 y 365+30 (un año hacia adelante)
+        long randomDays = ThreadLocalRandom.current().nextLong(31, 396);
+
+        // Retornar la fecha actual más los días aleatorios generados
+        return today.plusDays(randomDays);
+    }
+
+    //TODO: Luego hacer un estudio del minimo y maximo segun el tipo de alimento y refactorizar la firma del metodo
+    //public static int generateRandomCalories(int minCalories, int maxCalories) {
+    public static int generateRandomCalories() {
+
+        int minCalories = 50;
+        int maxCalories = 500;
+
+        // Generar un número aleatorio de calorías dentro del rango especificado
+        return ThreadLocalRandom.current().nextInt(minCalories, maxCalories + 1);
     }
 }
