@@ -2,50 +2,36 @@ import Enums.CleanUseType;
 import Enums.DiscountType;
 import Enums.Packaging;
 import Models.Product;
+import Models.Store;
 import Models.Submodels.Cleaning;
 import Models.Submodels.Discount;
 import Models.Submodels.Drink;
 import Models.Submodels.Packaged;
 import Tools.Tools;
+import Tools.Console;
+
+import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
 
-        //listProductsHarcodeada();
-        //pruebaProductosVacios();
+        //region Cargo una lista con los productos de un proveedor y los muestro
+        List<Product> diarcoSupplier = loadStockSupplier();
+        Console.showProductsInReducedFormat(diarcoSupplier);
+        //endregion
 
-        supplierProducts();
+        //region Instancio la clase Store, cargo sus datos y muestro la información junto con el stock de productos
+        Store store = new Store("EGA", 1_000, BigDecimal.valueOf(1_000_000));
+        store.setProductsList(loadStockStore());
+
+        System.out.println(store);
+        Console.showProducts(store.getProductsList());
+        //endregion
     }
-
-/*    public static void listProductsHarcodeada() {
-        Product[] products = new Product[10];
-
-        products[0] = new Packaged("Rice", 50, 1500F, 600F,
-                LocalDate.parse("2024-12-31"),130, Packaging.BAG, true);
-        products[1] = new Packaged("Pasta", 30, 2000F, 1290F,
-                LocalDate.parse("2025-03-15"),210, Packaging.BAG, false);
-        products[2] = new Packaged("Cookies", 20, 1900F, 850F,
-                LocalDate.parse("2024-11-10"),400, Packaging.BAG, true);
-
-        products[3] = new Drink("Soda", 40, 1200F, 700F,
-                LocalDate.parse("2024-10-20"),150, 0.0F, false);
-        products[4] = new Drink("Wine", 25, 3900F, 2300F,
-                LocalDate.parse("2025-02-28"),600, 7.5F, false  );
-        products[5] = new Drink("Juice", 35, 3800F, 2700F,
-                LocalDate.parse("2024-09-15"),180, 14.2F, false);
-
-        products[6] = new Cleaning("Dish Soap", 60, 2650, 1500, CleanUseType.KITCHEN);
-        products[7] = new Cleaning("Laundry Detergent", 40, 4200F, 2900F, CleanUseType.KITCHEN);
-        products[8] = new Cleaning("Bathroom Cleaner", 50, 4570F, 3200F, CleanUseType.BATHROOM);
-        products[9] = new Cleaning("Multipurpose Cleaner", 70, 7500F, 4800F, CleanUseType.MULTIPURPOSE);
-
-        for (Product product : products) {
-            System.out.println(product);
-        }
-    }*/
-
-    public static void pruebaProductosVacios() {
+    private static void pruebaProductosVacios() {
         Cleaning prodLimpieza = new Cleaning();
         System.out.println(prodLimpieza);
 
@@ -56,45 +42,83 @@ public class Main {
         System.out.println(prodEnvasado);
     }
 
-    public static void supplierProducts() {
-        Product[] diarcoSupplier = new Product[10];
+    private static List<Product> loadStockSupplier() {
+        List<Product> diarcoSupplier = new ArrayList<>();
 
         //region PACKAGED PRODUCTS
-        diarcoSupplier[0] = new Packaged("Arroz Luchetti", 1500F, Tools.generateRandomFutureDate(),
-                Tools.generateRandomCalories(), true, Packaging.BAG);
+        diarcoSupplier.add(new Packaged("Arroz Luchetti", 1500F, Tools.generateRandomFutureDate(),
+                Tools.generateRandomCalories(), true, Packaging.PLASTIC_BAG));
 
-        diarcoSupplier[1] = new Packaged("Tallarin Matarazzo", 2000F,  new Discount(15F),
-                LocalDate.parse("2025-03-15"), 210F, false, Packaging.BAG);
+        diarcoSupplier.add(new Packaged("Tallarin Matarazzo", 2000F,  new Discount(15F),
+                LocalDate.parse("2025-03-15"), 210F, false, Packaging.PLASTIC_BAG));
 
-        diarcoSupplier[2] = new Packaged("Galletitas Oreo 300g", 2900F, LocalDate.parse("2024-11-10"),
-                400F, false, Packaging.BAG);
+        diarcoSupplier.add(new Packaged("Galletitas Oreo 300g", 2900F, LocalDate.parse("2024-11-10"),
+                400F, false, Packaging.PLASTIC_BAG));
         //endregion
 
         //region DRINK PRODUCTS
-        diarcoSupplier[3] = new Drink("Fernet Branca 750cc", 12500F, new Discount(10F),
-                LocalDate.parse("2030-10-20"),150F, false, 40F);
+        diarcoSupplier.add(new Drink("Fernet Branca 750cc", 12500F, new Discount(10F),
+                LocalDate.parse("2030-10-20"),150F, false, 40F));
 
-        diarcoSupplier[4] = new Drink("Vino Trapiche Malbec", 6800F, Tools.generateRandomFutureDate(),
-                600F, false, 14F);
+        diarcoSupplier.add(new Drink("Vino Trapiche Malbec", 6800F, Tools.generateRandomFutureDate(),
+                600F, false, 14F));
 
-        diarcoSupplier[5] = new Drink("Gin Gordon's", 9500F,
-                LocalDate.parse("2024-09-15"),180, true, 37.5F);
+        diarcoSupplier.add(new Drink("Gin Gordon's", 9500F,
+                LocalDate.parse("2024-09-15"),180, true, 37.5F));
         //endregion
 
         //region CLEANING PRODUCTS
-        diarcoSupplier[6] = new Cleaning("Jabon SKIP liquido 500ml", 8650F, CleanUseType. CLOTHES);
-        diarcoSupplier[7] = new Cleaning("Detergente Magistral 700ml", 4200F, CleanUseType.MULTIPURPOSE);
-        diarcoSupplier[8] = new Cleaning("Cif 900ml", 4570F, CleanUseType.BATHROOM);
-        diarcoSupplier[9] = new Cleaning("Lavandina Ayudin 1L", 3500F, new Discount(7F),
-                CleanUseType.MULTIPURPOSE);
+        diarcoSupplier.add(new Cleaning("Jabon SKIP liquido 500ml", 8650F, CleanUseType. CLOTHES));
+        diarcoSupplier.add(new Cleaning("Detergente Magistral 700ml", 4200F, CleanUseType.MULTIPURPOSE));
+        diarcoSupplier.add(new Cleaning("Cif 900ml", 4570F, CleanUseType.BATHROOM));
+        diarcoSupplier.add(new Cleaning("Lavandina Ayudin 1L", 3500F, new Discount(7F), CleanUseType.MULTIPURPOSE));
         //endregion
 
-        for (Product product : diarcoSupplier) {
-            product.showProductFromSupplier();
-        }
+        return diarcoSupplier;
+       }
 
+    private static List<Product> loadStockStore() {
+        List<Product> storeStock = new ArrayList<>();
+
+        //region PACKAGED PRODUCTS
+        storeStock.add(new Packaged("Harina 0000 Marolio", 20, 1800F, 40F,
+                LocalDate.parse("2025-01-10"), Tools.generateRandomCalories(), false, Packaging.PAPER_BAG));
+
+        storeStock.add(new Packaged("Azúcar Ledesma 1kg", 15, 1900F, 25F,
+                new Discount(5F), LocalDate.parse("2025-12-15"), 400F, true, Packaging.PLASTIC_BAG));
+
+        storeStock.add(new Packaged("Leche SanCor 1L", 17, 2400F, 35F,
+                LocalDate.parse("2024-10-20"), 150F, false, Packaging.TETRA_PACK));
+        //endregion
+
+        //region DRINK PRODUCTS
+        storeStock.add(new Drink("Cerveza Quilmes 1L", 24, 2500F, 30F,
+                LocalDate.parse("2024-09-30"),200F, false, 4.5F));
+
+        storeStock.add(new Drink("Whisky Johnnie Walker Red Label", 3,29000F, 30F,
+                new Discount(10F), LocalDate.parse("2030-05-25"), 800F, true, 40F));
+
+        storeStock.add(new Drink("Gaseosa Coca-Cola 2.25L", 30, 3100F, 30F,
+                LocalDate.parse("2024-02-10"), 300F, false, 0F));
+
+        storeStock.add(new Drink("Tónica Schweppes 2.25L", 8, 2900F, 30F,
+                LocalDate.parse("2024-12-01"), 150F, false, 0.0F));
+        //endregion
+
+        //region CLEANING PRODUCTS
+        storeStock.add(new Cleaning("Desinfectante Mr. Músculo 1L", 6, 2980F, 35F,
+                CleanUseType.MULTIPURPOSE));
+
+        storeStock.add(new Cleaning("Limpiador Cif 750ml", 10, 2720F, 25F,
+                new Discount(15F), CleanUseType.BATHROOM));
+
+        storeStock.add(new Cleaning("Jabón en Barra Dove 100g", 15, 1550F, 20F,
+                CleanUseType.PERSONAL_CARE));
+
+        //endregion
+
+        return storeStock;
     }
-
 
 }
 
