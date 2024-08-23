@@ -10,7 +10,9 @@ public enum Packaging {
     TETRA_PACK("TETRA PAK"),
     VACUUM_SEALED("ENVASADO AL VACIO"),
     JAR("FRASCO"),
-    BAG("BOLSA"),
+    PLASTIC_BAG("BOLSA PLASTICA"),
+    PAPER_BAG("BOLSA DE PAPEL"),
+
     BOX("CAJA");
 
     private final String name;

@@ -5,7 +5,8 @@ public enum CleanUseType {
     KITCHEN("COCINA"),
     BATHROOM("BAÑO"),
     CLOTHES("ROPA"),
-    MULTIPURPOSE("MULTIPROPÓSITO");
+    MULTIPURPOSE("MULTIPROPÓSITO"),
+    PERSONAL_CARE("CUIDADO PERSONAL");
 
     public final String name;
 
