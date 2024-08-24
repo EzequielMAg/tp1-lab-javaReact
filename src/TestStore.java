@@ -47,6 +47,13 @@ public class TestStore {
         // para calcular la ganancia real..
         storeProductsList.get(1).showProduct();
 
+        //region VENDIENDO UN PRODUCTO
+
+
+
+        //endregion
+
+
         //region TEST REQUERIMIENTO ADICIONAL
 
         // Puse un porcentake de descuiento de 35%.

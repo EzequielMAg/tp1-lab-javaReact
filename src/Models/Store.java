@@ -162,7 +162,18 @@ public final class Store {
     }
     //endregion
 
+    //region METODOS PARA COMPRAR PRODUCTOS
+    public void  sellProduct() {
+        
+    }
 
+
+
+
+
+    //endregion
+
+    //region METODO DEL REQUERIMIENTO ADICIONAL
     public List<String> obtenerComestiblesConMenorDescuento(float porcentajeDescuento) {
         return this.productsList.stream()
                 .filter(product -> product instanceof Edible)   // tiene que ser comestibles
@@ -190,4 +201,5 @@ public final class Store {
                         ((Edible) product).isImported() ? "Sí" : "No"))
                 .collect(Collectors.toList());
     }
+    //endregion
 }
