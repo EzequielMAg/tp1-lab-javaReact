@@ -1,5 +1,4 @@
 import Enums.CleanUseType;
-import Enums.DiscountType;
 import Enums.Packaging;
 import Models.Product;
 import Models.Store;
@@ -15,7 +14,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Main {
+public class TestStore {
     public static void main(String[] args) {
 
         //region Cargo una lista con los productos de un proveedor y los muestro
@@ -31,7 +30,7 @@ public class Main {
         Console.showProducts(store.getProductsList());
         //endregion
 
-        // COMPRANDO UN PRODUCTO
+        //region COMPRANDO UN PRODUCTO
         store.buyProduct(diarcoSupplier.get(3), 7);
 
         // Muestro como quedo la tienda luego de hacer la compra de un producto
@@ -42,10 +41,26 @@ public class Main {
 
         // Muestro solo el producto agregado
         storeProductsList.get(storeProductsList.size() - 1).showProduct();
+        //endregion
 
         // Muestro uno de mis productos en stock, que tiene un descuento aplicado y sin el atributo "cost" asignado
         // para calcular la ganancia real..
         storeProductsList.get(1).showProduct();
+
+        //region TEST REQUERIMIENTO ADICIONAL
+
+        // Puse un porcentake de descuiento de 35%.
+        // "Harina 0000 Kasdy" tiene dcto 36% y es NO importada, no tiene q aparecer y efectivamente.
+        //"Whisky Johnnie Walker R..." tampoco deberia aparecer, tiene un dcto de 10%, osea < 35%, pero es Imported, y efect.
+        List<String> listEdibleProductsOrdered = store.obtenerComestiblesConMenorDescuento(35);
+        List<String> listEdibleProductsOrdered2 = store.obtenerComestiblesConMenorDescuentoMasInfo(35);
+
+        //Muestro las listas
+        Tools.showList(listEdibleProductsOrdered);
+        System.out.println(" ");
+        Tools.showList(listEdibleProductsOrdered2);
+        // La azucar no aparece por que es IMPORTED
+        //endregion
     }
     private static void pruebaProductosVacios() {
         Cleaning prodLimpieza = new Cleaning();
@@ -97,11 +112,11 @@ public class Main {
         List<Product> storeStock = new ArrayList<>();
 
         //region PACKAGED PRODUCTS
-        storeStock.add(new Packaged("Harina 0000 Marolio", 20, 1800F, 40F,
-                LocalDate.parse("2025-01-10"), Tools.generateRandomCalories(), false, Packaging.PAPER_BAG));
+        storeStock.add(new Packaged("Harina 0000 Kasdy", 20, 1800F, 40F,
+                new Discount(36F), LocalDate.parse("2025-01-10"), Tools.generateRandomCalories(), false, Packaging.PAPER_BAG));
 
         storeStock.add(new Packaged("Azúcar Ledesma 1kg", 15, 1900F, 25F,
-                new Discount(5F), LocalDate.parse("2025-12-15"), 400F, true, Packaging.PLASTIC_BAG));
+                new Discount(5F), LocalDate.parse("2025-12-15"), 400F, false, Packaging.PLASTIC_BAG));
 
         storeStock.add(new Packaged("Leche SanCor 1L", 17, 2400F, 35F,
                 LocalDate.parse("2024-10-20"), 150F, false, Packaging.TETRA_PACK));
@@ -109,7 +124,7 @@ public class Main {
 
         //region DRINK PRODUCTS
         storeStock.add(new Drink("Cerveza Quilmes 1L", 24, 2500F, 30F,
-                LocalDate.parse("2024-09-30"),200F, false, 4.5F));
+                new Discount(10F), LocalDate.parse("2024-09-30"),200F, false, 4.5F));
 
         storeStock.add(new Drink("Whisky Johnnie Walker Red Label", 3,29000F, 30F,
                 new Discount(10F), LocalDate.parse("2030-05-25"), 800F, true, 40F));

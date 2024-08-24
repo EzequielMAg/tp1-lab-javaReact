@@ -1,6 +1,7 @@
 package Tools;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
 import Models.Product;
 import Models.Submodels.Cleaning;
@@ -114,5 +115,11 @@ public final class Tools {
         // En caso de que el tipo de producto no sea reconocido
         throw new IllegalArgumentException("Unknown product type");
 
+    }
+
+    public static <T> void showList(List<T> list) {
+        for(T item : list) {
+            System.out.println(item);
+        }
     }
 }

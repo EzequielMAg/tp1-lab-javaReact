@@ -3,6 +3,7 @@ package Models;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import Enums.DiscountType;
 import Models.Submodels.Discount;
@@ -100,7 +101,7 @@ public final class Store {
         return counter;
     }
 
-    //METODO PARA COMPRAR PRODUCTOS
+    //region METODOS PARA COMPRAR PRODUCTOS
     public void buyProduct(Product productToBuy, int quantityToBuy) {
 
         // Si product tiene un descuento, el atributo "salePrice" no es el precio final con dcto -> DEBO CALCULARLO
@@ -159,5 +160,34 @@ public final class Store {
     public boolean hasSufficientStorage(int additionalProducts) {
         return this.totalQuantityProductsStock() + additionalProducts <= this.maxProductCapacity;
     }
+    //endregion
 
+
+    public List<String> obtenerComestiblesConMenorDescuento(float porcentajeDescuento) {
+        return this.productsList.stream()
+                .filter(product -> product instanceof Edible)   // tiene que ser comestibles
+                .filter(product -> !((Edible) product).isImported())    // tiene q ser NO importados
+                .filter(product -> product.getDiscount().getValue() > 0) /*Con esta linea garantizo que tenga un dcto,
+                          sino me retorna incluso a los q tienen 0% dcto, que aunque cumple q es <porcentajeDescuento, ESTA MAL*/
+                .filter(product -> product.getDiscount().getValue() < porcentajeDescuento)  // segun dcto
+                .sorted((p1, p2) -> Float.compare(p1.getSalePrice(), p2.getSalePrice()))    // Ordeno por el precio de vta
+                .map(product -> product.getDescription().toUpperCase()) // Convertiendo a mayúscula
+                .collect(Collectors.toList()); // Transformo a lista de Strings
+    }
+
+    public List<String> obtenerComestiblesConMenorDescuentoMasInfo(float porcentajeDescuento) {
+        return this.productsList.stream()
+                .filter(product -> product instanceof Edible)
+                .filter(product -> !((Edible) product).isImported())
+                .filter(product -> product.getDiscount().getValue() > 0)
+                .filter(product -> product.getDiscount().getValue() < porcentajeDescuento)
+                .sorted((p1, p2) -> Float.compare(p1.getSalePrice(), p2.getSalePrice()))
+                .map(product -> String.format("%s - Precio: %.2f - Descuento: %.2f%% - Importado: %s",
+              //.map(product -> String.format("%s - Precio: %.2f - Importado: %s",
+                        product.getDescription().toUpperCase(),
+                        product.getSalePrice(),
+                        product.getDiscount().getValue(),
+                        ((Edible) product).isImported() ? "Sí" : "No"))
+                .collect(Collectors.toList());
+    }
 }
