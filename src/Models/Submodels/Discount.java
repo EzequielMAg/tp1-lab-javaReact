@@ -50,4 +50,6 @@ public final class Discount {
         return "\n TIPO DE DESCUENTO....: " + this.discountType.getName() +
                 "\n VALOR........: " + this.value;
     }
+
+
 }

@@ -30,6 +30,22 @@ public class Main {
         System.out.println(store);
         Console.showProducts(store.getProductsList());
         //endregion
+
+        // COMPRANDO UN PRODUCTO
+        store.buyProduct(diarcoSupplier.get(3), 7);
+
+        // Muestro como quedo la tienda luego de hacer la compra de un producto
+        System.out.println(store);
+
+        // Creo una referencia local para acceder mas rapidamente a la lista de productos de la tienda
+        List<Product> storeProductsList = store.getProductsList();
+
+        // Muestro solo el producto agregado
+        storeProductsList.get(storeProductsList.size() - 1).showProduct();
+
+        // Muestro uno de mis productos en stock, que tiene un descuento aplicado y sin el atributo "cost" asignado
+        // para calcular la ganancia real..
+        storeProductsList.get(1).showProduct();
     }
     private static void pruebaProductosVacios() {
         Cleaning prodLimpieza = new Cleaning();

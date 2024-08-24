@@ -51,6 +51,14 @@ public final class Drink extends Edible {
         Tools.autoIncrementId(lastId, super.id);
     }
 
+    public Drink(StringBuilder id, String description, int availableStock, float salePrice, float profitPercentage,
+                 float cost, boolean availableForSale, Discount discount, LocalDate expirationDate, float calories,
+                 boolean isImported, float alcoholContent) {
+
+        super(id, description, availableStock, salePrice, profitPercentage, cost, availableForSale, discount,
+                expirationDate, calories, isImported);
+        this.alcoholContent = alcoholContent;
+    }
     //endregion
 
     //region GETTERS AND SETTERS

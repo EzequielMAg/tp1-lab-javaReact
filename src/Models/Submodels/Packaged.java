@@ -66,6 +66,14 @@ public final class Packaged extends Edible {
         Tools.autoIncrementId(lastId, super.id);
     }
 
+    public Packaged(StringBuilder id, String description, int availableStock, float salePrice, float profitPercentage,
+                    float cost, boolean availableForSale, Discount discount, LocalDate expirationDate, float calories,
+                    boolean isImported, Packaging containerType) {
+
+        super(id, description, availableStock, salePrice, profitPercentage, cost, availableForSale, discount, expirationDate, calories, isImported);
+        this.containerType = containerType;
+    }
+
     //endregion
 
     //region GETTERS AND SETTERS

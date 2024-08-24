@@ -47,6 +47,12 @@ public final class Cleaning extends Product {
         Tools.autoIncrementId(lastId, super.id);
     }
 
+    public Cleaning(StringBuilder id, String description, int availableStock, float salePrice, float profitPercentage,
+                    float cost, boolean availableForSale, Discount discount, CleanUseType cleaningSurface) {
+
+        super(id, description, availableStock, salePrice, profitPercentage, cost, availableForSale, discount);
+        this.cleaningSurface = cleaningSurface;
+    }
     //endregion
 
     //region GETTERS AND SETTERS

@@ -53,12 +53,21 @@ public abstract class Edible extends Product {
 
     public Edible(String description, int availableStock, float salePrice, float profitPercentage, Discount discount,
                   LocalDate expirationDate, float calories, boolean isImported) {
+
         super(description, availableStock, salePrice, profitPercentage, discount);
         this.expirationDate = expirationDate;
         this.calories = calories;
         this.isImported = isImported;
     }
 
+    public Edible(StringBuilder id, String description, int availableStock, float salePrice, float profitPercentage,
+                  float cost, boolean availableForSale, Discount discount, LocalDate expirationDate, float calories, boolean isImported) {
+
+        super(id, description, availableStock, salePrice, profitPercentage, cost, availableForSale, discount);
+        this.expirationDate = expirationDate;
+        this.calories = calories;
+        this.isImported = isImported;
+    }
     //endregion
 
     //region GETTERS AND SETTERS

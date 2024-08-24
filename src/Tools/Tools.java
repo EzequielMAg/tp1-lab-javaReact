@@ -2,6 +2,10 @@ package Tools;
 
 import java.time.LocalDate;
 import java.util.concurrent.ThreadLocalRandom;
+import Models.Product;
+import Models.Submodels.Cleaning;
+import Models.Submodels.Drink;
+import Models.Submodels.Packaged;
 
 public final class Tools {
     public static String generateNextId(String lastId) {
@@ -57,5 +61,58 @@ public final class Tools {
 
         // Generar un número aleatorio de calorías dentro del rango especificado
         return ThreadLocalRandom.current().nextInt(minCalories, maxCalories + 1);
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Product> T clonProduct(T product) throws IllegalArgumentException {
+
+        if (product instanceof Drink) {
+            return (T) new Drink(
+                    product.getId(),
+                    product.getDescription(),
+                    product.getAvailableStock(),
+                    product.getSalePrice(),
+                    product.getProfitPercentage(),
+                    product.getCost(),
+                    product.isAvailableForSale(),
+                    product.getDiscount(),
+                    ((Drink) product).getExpirationDate(),
+                    ((Drink) product).getCalories(),
+                    ((Drink) product).isImported(),
+                    ((Drink) product).getAlcoholContent());
+        }
+
+        if (product instanceof Cleaning) {
+            return (T) new Cleaning(
+                    product.getId(),
+                    product.getDescription(),
+                    product.getAvailableStock(),
+                    product.getSalePrice(),
+                    product.getProfitPercentage(),
+                    product.getCost(),
+                    product.isAvailableForSale(),
+                    product.getDiscount(),
+                    ((Cleaning) product).getCleaningSurface() );
+        }
+
+        if (product instanceof Packaged) {
+            return (T) new Packaged(
+                    product.getId(),
+                    product.getDescription(),
+                    product.getAvailableStock(),
+                    product.getSalePrice(),
+                    product.getProfitPercentage(),
+                    product.getCost(),
+                    product.isAvailableForSale(),
+                    product.getDiscount(),
+                    ((Packaged) product).getExpirationDate(),
+                    ((Packaged) product).getCalories(),
+                    ((Packaged) product).isImported(),
+                    ((Packaged) product).getContainerType() );
+        }
+
+        // En caso de que el tipo de producto no sea reconocido
+        throw new IllegalArgumentException("Unknown product type");
+
     }
 }

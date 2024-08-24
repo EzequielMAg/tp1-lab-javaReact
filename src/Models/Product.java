@@ -9,20 +9,24 @@ public abstract class Product {
 
     //region ATTRIBUTES
     //Es autoincremental. Lo implemente en los submodels, ya q c/ clase tiene un ID de letras !=
-    protected StringBuilder id = new StringBuilder();
-    protected String description;
-    protected int availableStock;
-    protected float salePrice;
-    protected float profitPercentage;
-    //protected float cost;
-    protected boolean availableForSale;
-    protected Discount discount;
+    protected StringBuilder id = new StringBuilder(); //Queria modularizar y tuve que volver el String en StringBuilder.
+    private String description;
+    private int availableStock;
+    private float salePrice;
+    private float profitPercentage;
+
+    // Siento necesario agregar este atributo "COST" para que al momento de comprar un producto,
+    // sea salePriceSupplier != salePriceStore
+    private float cost;
+
+    private boolean availableForSale;
+    private Discount discount;
     //endregion
 
     //region CONSTRUCTORS
     public Product() {
         availableForSale = true;
-        discount = new Discount(); //Instancio un objeto Discount por default para que no apunte a null
+        discount = new Discount(); // Instancio un obj Discount por default para que no apunte a null y genere problemas
     }
 
     public Product(String description, float salePrice) {
@@ -61,15 +65,22 @@ public abstract class Product {
 
         this.availableForSale = true;
     }
+
+    public Product(StringBuilder id, String description, int availableStock, float salePrice, float profitPercentage, float cost, boolean availableForSale, Discount discount) {
+        this.id = id;
+        this.description = description;
+        this.availableStock = availableStock;
+        this.salePrice = salePrice;
+        this.profitPercentage = profitPercentage;
+        this.cost = cost;
+        this.availableForSale = availableForSale;
+        this.discount = discount;
+    }
     //endregion
 
     //region GETTERS AND SETTERS
     public StringBuilder getId() {
         return id;
-    }
-
-    public void setId(StringBuilder id) {
-        this.id = id;
     }
 
     public String getDescription() {
@@ -104,12 +115,28 @@ public abstract class Product {
         this.profitPercentage = profitPercentage;
     }
 
+    public float getCost() {
+        return cost;
+    }
+
+    public void setCost(float cost) {
+        this.cost = cost;
+    }
+
     public boolean isAvailableForSale() {
         return availableForSale;
     }
 
     public void setAvailableForSale(boolean availableForSale) {
         this.availableForSale = availableForSale;
+    }
+
+    public Discount getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(Discount discount) {
+        this.discount = discount;
     }
     //endregion
 
@@ -135,8 +162,8 @@ public abstract class Product {
                 "\n DESCRIPCIÓN........: " + (this.description == null ? "SIN DESCRIPCIÓN" : this.description) +
                 "\n STOCK..............: " + this.availableStock + (this.availableStock == 1 ? " unidad" : " unidades") +
                 "\n PRECIO.............: " + this.showSalePrice() +
-                //"\n COSTO..............: " + this.cost + //lo habia planteado antes y lo elimine
                 "\n GANANCIA...........: " + this.showProfit() +
+                "\n COSTO..............: " + this.cost +
                 "\n DISPONIBLE P/ VTA..: " + (this.availableForSale ? "SI" : "NO") +
 
                 (this.discount.getDiscountType() == DiscountType.NO_DISCOUNT ?
@@ -152,10 +179,10 @@ public abstract class Product {
         System.out.println("-------------------------------------------------------------------------\u001B[0m");
 
         System.out.println(this);
-        System.out.println("\n\n\n\n\n\n\n\n\n\n\n");
+        System.out.println("\n\n\n\n\n\n\n\n\n");
     }
 
-    public void showProductInReducedFormat()         {
+    public void showProductInReducedFormat()  {
         // Hago este metodo porque el proveedor no va a querer mostrar todos los datos, algunos son privados.
 
         System.out.println(
@@ -175,62 +202,97 @@ public abstract class Product {
                                 "\n DESCUENTO..........: " + this.showDiscount()));
     }
 
+    //TODO: refactor name because it does not show the sale price
     public String showSalePrice() {
-        //Si NO TIENE DESCUENTO muestro el precio directamente
-        if(this.discount.getDiscountType() == DiscountType.NO_DISCOUNT) {
-            return "$" + this.salePrice;
-        }
 
-        //Si llego aca, es porque TIENE UN DESCUENTO -> tengo que hacer el calculo del precio final
-        return "$" + this.finalPriceWithDiscount() + " (con descuento).    $" + this.salePrice + " (anterior)";
+        float finalSalePrice = Product.finalPriceWithDiscount(this.salePrice, this.discount);
+
+        // NO TIENE DESCUENTO
+        if(this.salePrice == finalSalePrice) return "$" + this.salePrice;
+
+        // TIENE DESCUENTO
+        return "$" + finalSalePrice + " (con descuento).  $" + this.salePrice + " (anterior)";
     }
 
-    public String showDiscount() {
-        DiscountType discountType = this.discount.getDiscountType();
+    //TODO: refactor name because it does not show the discount
+    private String showDiscount() {
 
-        if(discountType == DiscountType.NO_DISCOUNT) {
-            return discountType.getName();
-        }
+        if(!hasDiscount(this.discount)) return DiscountType.NO_DISCOUNT.getName();
 
-        if (discountType == DiscountType.PERCENTAGE) {
+        if (this.discount.getDiscountType() == DiscountType.PERCENTAGE) {
             return this.discount.getValue() + "%";
         }
 
         return this.calculateDiscountPercentage(this.salePrice, this.discount.getValue()) + "%";
     }
 
-    public String showProfit() {
+    //TODO: refactor name because it does not show the profit
+    private String showProfit() {
+
+        //1° EVALUO SI ESTA CARGADO EL ATRIBUTO O SI ES VALIDO (positiva > 0) o retorna un msj de error //TODO: EXCEPCIONS
+        if(this.profitPercentage == 0F) return "NO SE HA ESTABLECIDO UNA GANANCIA PARA ESTE PRODUCTO AUN!";
+        if(this.profitPercentage < 0) return "LA GANANCIA CARGADA NO ES VALIDA!";
+
+        float finalProfit = finalProfitAfterDiscount();
 
         // Si el producto NO TIENE DESCUENTO la ganancia no se modifica, sigue siendo la misma
-        if(this.discount.getDiscountType() == DiscountType.NO_DISCOUNT) {
-            return this.profitPercentage + "%";
-        }
+        if(finalProfit == this.profitPercentage) return finalProfit + "%";
 
-        //TODO:
-        // En este punto, el producto TIENE UN DESCUENTO -> debo calcular la GANANCIA REAL
-        // Tengo que plantear un atributo COST, aunque puedo calcularlo sin el costo... DEBO TENER CARGADA LA GANANCIA
-        // Y si no la tengo cargada aun?
-        // 1° SE DEBE RESOLVER LA COMPRA..... Tiene que estar el atributo COST, y apenas se compra un producto para la
-        // tienda se debe asignar "salePrice" al "cost". Luego si E dcto llamar al metodo "finalProfitAfterDiscount()"
-        //float newProfit =
-
-        return "";
+        // TIENE DESCUENTO -> muestro la ganancia actual y la anterior
+        return finalProfit + "% (real).  " + this.profitPercentage + "% (anterior)";
     }
 
-    public float calculateDiscountPercentage(float originalValue, float targetValue) {
+    private float calculateDiscountPercentage(float originalValue, float targetValue) {
         float difference = originalValue - targetValue;
         return Tools.percentageOfPartialValue(originalValue, difference);
     }
 
-    public float finalPriceWithDiscount() {
-        float remainingPercentage = 100 - this.discount.getValue();
-        return (remainingPercentage * this.salePrice) / 100;
+    public static float finalPriceWithDiscount(float salePrice, Discount discount) {
+        //Si NO TIENE DESCUENTO retorno directamente el precio de venta asignado
+        if(!hasDiscount(discount)) {
+            return salePrice;
+        }
+
+        // TIENE UN DESCUENTO -> tengo que ver el tipo de dcto y hacer el calculo correspondiente del precio final
+        if(discount.getDiscountType() == DiscountType.TARGET_PRICE) {
+            // En este caso no hay que hacer ningun calculo, ya que con TARGET_PRICE ya tengo el value final
+            return discount.getValue();
+        }
+
+        // discount.getDiscountType() == DiscountType.PERCENTAGE; -> Aca si hay que hacer un calculo, o unos..
+        float remainingPercentage = 100 - discount.getValue();
+        return Tools.calculatePercentage(salePrice, remainingPercentage);
+        //return (remainingPercentage * salePrice) / 100;
     }
 
-    public float finalProfitAfterDiscount() {
+    private float finalProfitAfterDiscount() {
+        // Si el producto NO TIENE DESCUENTO la ganancia no se modifica, sigue siendo la misma
+        if(!hasDiscount(this.discount)) return this.profitPercentage;
 
+        // En este punto, el producto TIENE UN DESCUENTO y la ganancia es > 0 -> debo calcular la GANANCIA REAL
+        float finalPrice = finalPriceWithDiscount(this.salePrice, this.discount);
 
+        // Puedo calcularla sin la necesidad de que el atributo "cost" este cargado...
+        if(this.cost <= 0F) {
+            float calculatedCost = Tools.percentageOfPartialValue(100+this.profitPercentage, this.salePrice);
 
-        return 0.0f;
+            // Ganancia REAL calculada luego del dcto:
+            return (Tools.percentageOfPartialValue(calculatedCost, finalPrice) - 100F);
+        }
+
+        // En este punto, el atributo "cost" tiene un valor
+        return (Tools.percentageOfPartialValue(this.cost, finalPrice) - 100F);
+    }
+
+    public static float finalPriceWithProfit(float cost, float profitPercentage) {
+        //TODO: futura refactorizacion agregando logica de validaciones
+        float totalPercentage = 100 + profitPercentage;
+        return Tools.calculatePercentage(cost, totalPercentage);
+        //return (totalPercentage * cost) / 100;
+    }
+
+    public static boolean hasDiscount(Discount discount) {
+        //return !(discount == null || discount.getDiscountType() == DiscountType.NO_DISCOUNT);
+        return discount != null && discount.getDiscountType() != DiscountType.NO_DISCOUNT;
     }
 }
